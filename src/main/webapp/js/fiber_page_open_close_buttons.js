@@ -28,7 +28,7 @@ const closeModal = (modal) => {
 };
 
 const escClose = (e) => {
-    if (e.keyCode == 27) {
+    if (e.keyCode === 27) {
         closeModal();
     }
 };

@@ -1,3 +1,7 @@
+html{
+    background-color: #FFFFFF;
+}
+
 .page_title {
     text-align: center;
     font-size: 60px;
@@ -20,11 +24,18 @@
     border: 1px solid black;
 }
 
-.create-fiber-button {
+.buttons {
     grid-template-columns: repeat(16, 1fr);
     display: grid;
-    padding: 10px;
+    margin-bottom: 10px;
     justify-items: center;
+}
+
+.item_1 {
+    border: 1px solid black;
+    cursor: pointer;
+    grid-column: 1/2;
+    background-color: #FFFFFF;
 }
 
 /* button 16th element to place it to the right */

@@ -8,11 +8,13 @@
     <title>Fiber</title>
     <script src="<c:url value="/js/fiber_page_new_comment.js"/>"></script>
     <script src="<c:url value="/js/fiber_page_open_close_buttons.js"/>"></script>
+    <script src="<c:url value="/js/fiber_page_change_colors.js"/>"></script>
 </head>
 <body>
 <h5 class="page_title">Fiber</h5>
 
-<div class="create-fiber-button">
+<div class="buttons">
+    <button class="modal-open item_1" data-id="change-colors">Reverse colors</button>
     <button class="modal-open item_16" data-id="new-fiber-modal">New Fiber</button>
 </div>
 
