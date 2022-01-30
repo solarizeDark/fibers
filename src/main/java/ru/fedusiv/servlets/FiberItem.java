@@ -23,7 +23,7 @@ public class FiberItem extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         ServletContext context = config.getServletContext();
-        this.fibersService = (FibersService) context.getAttribute("fibersRepository");
+        this.fibersService = (FibersService) context.getAttribute("fibersService");
     }
 
     @Override

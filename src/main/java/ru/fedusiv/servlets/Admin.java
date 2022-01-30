@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/fibers")
-public class MainPage extends HttpServlet {
+@WebServlet("/admin")
+public class Admin extends HttpServlet {
 
     private FibersService fibersService;
 
@@ -26,9 +26,9 @@ public class MainPage extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Fiber> of = fibersService.findAllOpeningFibers();
-        request.setAttribute("fibers", of);
-        request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+        List<Fiber> fibers = fibersService.findAll();
+        request.setAttribute("fibers", fibers);
+        request.getRequestDispatcher("/WEB-INF/jsp/admin.jsp").forward(request, response);
     }
 
 }

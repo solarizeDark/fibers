@@ -8,6 +8,11 @@ import java.util.List;
 public class FibersRepositoryJdbc implements FibersRepository {
 
     //language=SQL
+    private static String SQL_FIND_ALL =
+            "select id, section, creation_date at time zone 'utc' at time zone 'Europe/Moscow' as cd," +
+            "comment_to from fibers";
+
+    //language=SQL
     private static String SQL_FIND_ALL_OF =
             "select id, section, creation_date at time zone 'utc' at time zone 'Europe/Moscow' as cd," +
             "comment_to from fibers where comment_to is null";
@@ -56,7 +61,7 @@ public class FibersRepositoryJdbc implements FibersRepository {
 
     @Override
     public List<Fiber> findAll() {
-        return null;
+        return jdbcTemplate.query(SQL_FIND_ALL, mapper);
     }
 
     @Override

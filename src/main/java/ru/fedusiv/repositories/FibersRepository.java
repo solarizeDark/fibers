@@ -8,5 +8,6 @@ public interface FibersRepository extends CRUDRepository<Fiber> {
 
     List<Fiber> findAllOpeningFibers();
     List<Fiber> findAllComments(Long id);
+    List<Fiber> findAll();
 
 }

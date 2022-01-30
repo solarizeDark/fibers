@@ -9,8 +9,8 @@ public class FibersServiceImpl implements FibersService {
 
     private FibersRepository fibersRepository;
 
-    public FibersServiceImpl(FibersRepository usersRepository) {
-        this.fibersRepository = usersRepository;
+    public FibersServiceImpl(FibersRepository fibersRepository) {
+        this.fibersRepository = fibersRepository;
     }
 
     @Override
@@ -31,5 +31,10 @@ public class FibersServiceImpl implements FibersService {
     @Override
     public void save(Fiber fiber) {
         fibersRepository.save(fiber);
+    }
+
+    @Override
+    public List<Fiber> findAll() {
+        return fibersRepository.findAll();
     }
 }

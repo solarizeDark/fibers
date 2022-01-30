@@ -43,8 +43,8 @@ public class ContextListener implements ServletContextListener {
 
 
         FibersRepository fibersRepository = new FibersRepositoryJdbc(dataSource);
-        FibersService usersService = new FibersServiceImpl(fibersRepository);
-        context.setAttribute("fibersRepository", usersService);
+        FibersService fibersService = new FibersServiceImpl(fibersRepository);
+        context.setAttribute("fibersService", fibersService);
 
     }
 

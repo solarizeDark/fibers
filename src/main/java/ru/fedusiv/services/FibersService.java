@@ -10,5 +10,6 @@ public interface FibersService {
     Fiber findById(Long id);
     List<Fiber> findAllComments(Long id);
     void save(Fiber fiber);
+    List<Fiber> findAll();
 
 }
