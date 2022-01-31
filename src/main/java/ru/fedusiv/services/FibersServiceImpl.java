@@ -34,6 +34,11 @@ public class FibersServiceImpl implements FibersService {
     }
 
     @Override
+    public void delete(Fiber fiber) {
+        fibersRepository.delete(fiber);
+    }
+
+    @Override
     public List<Fiber> findAll() {
         return fibersRepository.findAll();
     }

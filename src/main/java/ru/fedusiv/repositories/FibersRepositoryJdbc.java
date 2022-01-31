@@ -8,6 +8,9 @@ import java.util.List;
 public class FibersRepositoryJdbc implements FibersRepository {
 
     //language=SQL
+    private static String SQL_DELETE_FIBER = "delete from fibers where id = ?";
+
+    //language=SQL
     private static String SQL_FIND_ALL =
             "select id, section, creation_date at time zone 'utc' at time zone 'Europe/Moscow' as cd," +
             "comment_to from fibers";
@@ -57,6 +60,11 @@ public class FibersRepositoryJdbc implements FibersRepository {
     @Override
     public void update(Fiber entity) {
 
+    }
+
+    @Override
+    public void delete(Fiber entity) {
+        jdbcTemplate.update(SQL_DELETE_FIBER, entity.getId());
     }
 
     @Override

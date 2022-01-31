@@ -2,8 +2,14 @@ package ru.fedusiv.listeners;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.fedusiv.repositories.AdminsRepository;
+import ru.fedusiv.repositories.AdminsRepositoryJdbc;
 import ru.fedusiv.repositories.FibersRepository;
 import ru.fedusiv.repositories.FibersRepositoryJdbc;
+import ru.fedusiv.services.AdminsService;
+import ru.fedusiv.services.AdminsServiceImpl;
 import ru.fedusiv.services.FibersService;
 import ru.fedusiv.services.FibersServiceImpl;
 
@@ -41,10 +47,16 @@ public class ContextListener implements ServletContextListener {
         hikariConfig.setMaximumPoolSize (Integer.parseInt(properties.getProperty("db.hikari.max-pool-size")));
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        context.setAttribute("passwordEncoder", passwordEncoder);
 
         FibersRepository fibersRepository = new FibersRepositoryJdbc(dataSource);
         FibersService fibersService = new FibersServiceImpl(fibersRepository);
         context.setAttribute("fibersService", fibersService);
+
+        AdminsRepository adminsRepository = new AdminsRepositoryJdbc(dataSource);
+        AdminsService adminsService = new AdminsServiceImpl(adminsRepository, passwordEncoder);
+        context.setAttribute("adminsService", adminsService);
 
     }
 

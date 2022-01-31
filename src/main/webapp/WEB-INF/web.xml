@@ -9,7 +9,7 @@
          but in that case u cannot provide the order of filters execution -->
 <!--    <filter>-->
 <!--        <filter-name>example-filter</filter-name>-->
-<!--        <filter-class>ru.fedusiv.filters.ExampleFilter</filter-class>-->
+<!--        <filter-class>ru.fedusiv.filters.AdminsAuthFilter</filter-class>-->
 <!--    </filter>-->
 <!--    <filter-mapping>-->
 <!--        <filter-name>example-filter</filter-name>-->

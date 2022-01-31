@@ -15,8 +15,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/fiber")
-public class FiberItem extends HttpServlet {
+@WebServlet("/admin/storage")
+public class AdminPage extends HttpServlet {
 
     private FibersService fibersService;
 
@@ -29,23 +29,19 @@ public class FiberItem extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestType = request.getHeader("type");
+        List<Fiber> fibers = fibersService.findAll();
 
-        Long id = Long.parseLong(request.getParameter("fiber_id"));
         if (requestType != null) {
             // ajax request case
-            List<Fiber> fibers = fibersService.findAllComments(id);
             Gson gson = new Gson();
             String fibersJSON = gson.toJson(fibers);
             response.setContentType("application/json");
-            System.out.println(fibersJSON);
             response.getWriter().write(fibersJSON);
         } else {
-            Fiber fiber = fibersService.findById(id);
-            List<Fiber> comments = fibersService.findAllComments(id);
-            request.setAttribute("fiber", fiber);
-            request.setAttribute("comments", comments);
-            request.getRequestDispatcher("/WEB-INF/jsp/fiber.jsp").forward(request, response);
+            request.setAttribute("fibers", fibers);
+            request.getRequestDispatcher("/WEB-INF/jsp/admin_storage.jsp").forward(request, response);
         }
+
     }
 
     @Override
@@ -58,7 +54,7 @@ public class FiberItem extends HttpServlet {
         }
         Gson gson = new Gson();
         Fiber newFiber = gson.fromJson(sb.toString(), Fiber.class);
-        fibersService.save(newFiber);
+        fibersService.delete(newFiber);
     }
 
 }

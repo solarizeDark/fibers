@@ -12,11 +12,11 @@ document.addEventListener("click", (e) => {
             'commentTo': data.get('comment_to'),
             'section': data.get('comment')
         }
-        makePOSTRequest(comment);
+        makePOSTRequest(comment, fiberFlow);
     }
 });
 
-function makePOSTRequest(comment) {
+function makePOSTRequest(data, callback) {
 
     let xhr = new XMLHttpRequest();
 
@@ -28,11 +28,11 @@ function makePOSTRequest(comment) {
 
     xhr.open("POST", location.toString());
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(comment));
-    xhr.onload = makeGETRequest();
+    xhr.send(JSON.stringify(data));
+    xhr.onload = makeGETRequest(callback);
 }
 
-async function makeGETRequest() {
+async function makeGETRequest(callback) {
 
     let requestURL = new URL(location.toString());
 
@@ -44,15 +44,15 @@ async function makeGETRequest() {
     xhr.setRequestHeader('type', 'ajax');
     xhr.send();
 
-    xhr.onload = function () {
-        let json_response = xhr.response;
-        console.log(json_response);
-        for (let i in json_response) {
-            document.getElementById('fibers').innerHTML +=
-                '<div class=\"item\">' + getDate(json_response[i]) + ' #' + json_response[i].id
-                + ' comment to: #' + json_response[i].commentTo + '<br>' + json_response[i].section + '</div>'
-        }
-        console.log(document.getElementById('fibers'))
+    xhr.onload = callback(xhr);
+}
+
+function fiberFlow(xhr) {
+    let json_response = xhr?.response;
+    for (let i in json_response) {
+        document.getElementById('fibers').innerHTML +=
+            '<div class=\"item\">' + getDate(json_response[i]) + ' #' + json_response[i].id
+            + ' comment to: #' + json_response[i].commentTo + '<br>' + json_response[i].section + '</div>'
     }
 }
 

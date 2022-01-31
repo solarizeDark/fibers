@@ -10,6 +10,7 @@ public interface FibersService {
     Fiber findById(Long id);
     List<Fiber> findAllComments(Long id);
     void save(Fiber fiber);
+    void delete(Fiber fiber);
     List<Fiber> findAll();
 
 }

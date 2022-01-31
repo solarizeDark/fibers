@@ -31,3 +31,22 @@ values ('second section ever', current_timestamp, null),
 
 insert into fibers (section, creation_date, comment_to)
 values ('time check section', current_timestamp, null);
+
+create table admins (
+
+        id bigserial,
+        constraint pk_admins primary key (id),
+
+        login text not null,
+
+        password timestamp not null
+
+);
+
+alter table admins
+alter column password type varchar;
+
+alter table fibers
+drop constraint fk_fibers_id,
+    add constraint fk_fibers_id foreign key (comment_to) references fibers(id)
+    on delete cascade;
