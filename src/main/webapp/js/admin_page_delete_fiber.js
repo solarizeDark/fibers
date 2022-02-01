@@ -15,10 +15,10 @@ function fibersAll(xhr) {
     for (let i in json_response) {
         document.getElementById('fibers_list').innerHTML +=
             '<tr>' +
-            '<td>' + json_response[i].id + '</td>' +
-            '<td>' + json_response[i].id + '</td>' +
-            '<td>' + json_response[i].section + '</td>' +
-            '<td>' + json_response[i].commentTo + '</td>' +
+            '<td> ${json_response[i].id} </td>' +
+            '<td> ${getDate(json_response[i])} </td>' +
+            '<td> ${json_response[i].section} </td>' +
+            '<td> ${json_response[i].commentTo} </td>' +
             '</tr>';
     }
 }

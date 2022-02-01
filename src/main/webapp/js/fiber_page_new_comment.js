@@ -12,11 +12,12 @@ document.addEventListener("click", (e) => {
             'commentTo': data.get('comment_to'),
             'section': data.get('comment')
         }
-        makePOSTRequest(comment, fiberFlow);
+
+        makePOSTRequest(comment);
     }
 });
 
-function makePOSTRequest(data, callback) {
+function makePOSTRequest(data) {
 
     let xhr = new XMLHttpRequest();
 
@@ -26,34 +27,38 @@ function makePOSTRequest(data, callback) {
         }
     }
 
-    xhr.open("POST", location.toString());
+    xhr.open('POST', location.toString());
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(data));
-    xhr.onload = makeGETRequest(callback);
+
+    let thread_composer = (error, xhr) => {
+        if (error) {
+            alert("Error");
+        } else {
+            let json_response = xhr?.response;
+            for (let i in json_response) {
+                document.getElementById('fibers').innerHTML +=
+                    '<div class=\"item\">' + getDate(json_response[i]) + ' #' + json_response[i].id
+                    + ' comment to: #' + json_response[i].commentTo + '<br>' + json_response[i].section + '</div>'
+            }
+        }
+    };
+
+    xhr.onload = makeGETRequest(thread_composer);
 }
 
 async function makeGETRequest(callback) {
-
-    let requestURL = new URL(location.toString());
 
     await new Promise(r => setTimeout(r, 2000));
 
     let xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    xhr.open('GET', requestURL.toString());
+    xhr.open('GET', location.toString());
     xhr.setRequestHeader('type', 'ajax');
     xhr.send();
 
-    xhr.onload = callback(xhr);
-}
-
-function fiberFlow(xhr) {
-    let json_response = xhr?.response;
-    for (let i in json_response) {
-        document.getElementById('fibers').innerHTML +=
-            '<div class=\"item\">' + getDate(json_response[i]) + ' #' + json_response[i].id
-            + ' comment to: #' + json_response[i].commentTo + '<br>' + json_response[i].section + '</div>'
-    }
+    xhr.onload = () => callback(null, xhr);
+    xhr.onerror = () => callback(new Error('Error'));
 }
 
 function getDate(json) {
