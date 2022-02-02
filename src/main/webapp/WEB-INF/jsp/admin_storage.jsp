@@ -3,7 +3,7 @@
 <html>
 <head>
     <script src="<c:url value="/js/fiber_page_change_colors.js"/>"></script>
-    <script src="<c:url value="/js/fiber_page_new_comment.js"/>"></script>
+    <script src="<c:url value="/js/new_comment.js"/>"></script>
     <script src="<c:url value="/js/admin_page_delete_fiber.js"/>"></script>
 
     <title>admin</title>
