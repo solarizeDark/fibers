@@ -7,6 +7,7 @@
     <style><%@include file="/css/style_fiber_page.css"%></style>
     <title>Fiber</title>
     <script src="<c:url value="/js/new_comment.js"/>"></script>
+    <script src="<c:url value="/js/IdError.js"/>"></script>
     <script src="<c:url value="/js/fiber_page_open_close_buttons.js"/>"></script>
     <script src="<c:url value="/js/fiber_page_change_colors.js"/>"></script>
 </head>
