@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/admin/storage")
-public class AdminPage extends HttpServlet {
+public class Storage extends HttpServlet {
 
     private FibersService fibersService;
 

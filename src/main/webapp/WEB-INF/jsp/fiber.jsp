@@ -30,7 +30,7 @@
             <input class="input" name="comment" placeholder="Text" type="text" required/>
         </form>
         <br>
-        <button class="modal-create" data-id="new_comment">Create</button>
+        <button id="create-button" class="modal-create">Create</button>
         <button class="modal-close" data-id="new-fiber-modal">Close</button>
     </div>
 </div>
