@@ -45,7 +45,7 @@ public class Storage extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader br = request.getReader();
         String str;
@@ -53,7 +53,9 @@ public class Storage extends HttpServlet {
             sb.append(str);
         }
         Gson gson = new Gson();
+        System.out.println(sb.toString());
         Fiber newFiber = gson.fromJson(sb.toString(), Fiber.class);
+        System.out.println(newFiber);
         fibersService.delete(newFiber);
     }
 

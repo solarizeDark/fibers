@@ -37,7 +37,6 @@ public class FiberItem extends HttpServlet {
             Gson gson = new Gson();
             String fibersJSON = gson.toJson(fibers);
             response.setContentType("application/json");
-            System.out.println(fibersJSON);
             response.getWriter().write(fibersJSON);
         } else {
             Fiber fiber = fibersService.findById(id);

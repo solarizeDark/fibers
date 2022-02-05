@@ -2,8 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <script src="<c:url value="/js/IdError.js"/>"></script>
+    <script src="<c:url value="/js/fetch.js"/>"></script>
     <script src="<c:url value="/js/fiber_page_change_colors.js"/>"></script>
-    <script src="<c:url value="/js/admin_page_delete_fiber.js"/>"></script>
+    <script src="<c:url value="/js/delete_fiber.js"/>"></script>
 
     <title>admin</title>
     <style>
@@ -14,10 +16,10 @@
 </head>
 <body>
 
-<form method="post" action="/admin/storage">
-    <input type="text" placeholder="id" name="id" style="padding: 10px; margin-bottom: 10px">
-    <input type="submit" value="delete" style="padding: 10px; margin-bottom: 10px">
+<form id="fiber-id">
+    <input type="number" placeholder="id" name="id" style="padding: 10px; margin-bottom: 5px" required/>
 </form>
+<button id="delete-button" style="padding: 10px; margin-bottom: 10px">delete</button>
 
 <table id="fibers_list">
     <tr>

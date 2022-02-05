@@ -19,6 +19,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -33,8 +34,11 @@ public class ContextListener implements ServletContextListener {
         ServletContext context = sce.getServletContext();
 
         Properties properties = new Properties();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream inputStream;
         try {
-            properties.load(new FileReader("E:\\JavaLab\\fibers\\src\\main\\resources\\db.properties"));
+            inputStream = classLoader.getResourceAsStream("db.properties");
+            properties.load(inputStream);
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }

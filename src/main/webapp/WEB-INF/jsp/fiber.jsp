@@ -10,6 +10,7 @@
     <script src="<c:url value="/js/IdError.js"/>"></script>
     <script src="<c:url value="/js/fiber_page_open_close_buttons.js"/>"></script>
     <script src="<c:url value="/js/fiber_page_change_colors.js"/>"></script>
+    <script src="<c:url value="/js/create_fiber.js"/>"></script>
 </head>
 <body>
 <h5 class="page_title">Fiber</h5>
@@ -35,20 +36,22 @@
     </div>
 </div>
 
-<div class="container" id="fibers">
+<div class="container">
     <div class="opening-fiber">
         ${fiber.creationDateToString()}
         #${fiber.getId()}
         <br>${fiber.getSection()}
     </div>
-    <c:forEach items="${comments}" var="comment">
-        <div class="item">
-            ${comment.creationDateToString()}
-            #${comment.getId()}
-            comment to: #${comment.getCommentTo()}
-            <br>${comment.getSection()}
-        </div>
-    </c:forEach>
+    <div class="container" id="fibers">
+        <c:forEach items="${comments}" var="comment">
+            <div class="item">
+                ${comment.creationDateToString()}
+                #${comment.getId()}
+                comment to: #${comment.getCommentTo()}
+                <br>${comment.getSection()}
+            </div>
+        </c:forEach>
+    </div>
 </div>
 </body>
 </html>
