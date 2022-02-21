@@ -49,15 +49,7 @@ public class FiberItem extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        BufferedReader br = request.getReader();
-        String str;
-        while( (str = br.readLine()) != null ){
-            sb.append(str);
-        }
-        Gson gson = new Gson();
-        Fiber newFiber = gson.fromJson(sb.toString(), Fiber.class);
-        fibersService.save(newFiber);
+        fibersService.save(request.getReader());
     }
 
 }

@@ -18,7 +18,8 @@ public class FibersRepositoryJdbc implements FibersRepository {
     //language=SQL
     private static String SQL_FIND_ALL_OF =
             "select id, section, creation_date at time zone 'utc' at time zone 'Europe/Moscow' as cd," +
-            "comment_to from fibers where comment_to is null";
+            "comment_to from fibers where comment_to is null " +
+            "order by cd desc";
     //language=SQL
     private static String SQL_FIND_FIBER_BY_ID =
             "select id, section, creation_date at time zone 'utc' at time zone 'Europe/Moscow' as cd," +

@@ -1,8 +1,11 @@
 package ru.fedusiv.services;
 
+import com.google.gson.Gson;
 import ru.fedusiv.models.Fiber;
 import ru.fedusiv.repositories.FibersRepository;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
 
 public class FibersServiceImpl implements FibersService {
@@ -29,7 +32,15 @@ public class FibersServiceImpl implements FibersService {
     }
 
     @Override
-    public void save(Fiber fiber) {
+    public void save(BufferedReader br) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        String str;
+        while( (str = br.readLine()) != null ){
+            sb.append(str);
+        }
+        Gson gson = new Gson();
+        Fiber fiber = gson.fromJson(sb.toString(), Fiber.class);
+
         fibersRepository.save(fiber);
     }
 

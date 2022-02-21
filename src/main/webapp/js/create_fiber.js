@@ -39,17 +39,3 @@ let thread_composer =
                 + ' comment to: #' + item.commentTo + '<br>' + item.section + '</div>'
         }
     };
-
-// <div className="opening-fiber">
-//     ${fiber.creationDateToString()}
-//     #${fiber.getId()}
-//     <br>${fiber.getSection()}
-// </div>
-// <c:forEach items="${comments}" var="comment">
-//     <div className="item">
-//         ${comment.creationDateToString()}
-//         #${comment.getId()}
-//         comment to: #${comment.getCommentTo()}
-//         <br>${comment.getSection()}
-//     </div>
-// </c:forEach>
