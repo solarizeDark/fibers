@@ -19,11 +19,13 @@ import java.util.List;
 public class FiberItem extends HttpServlet {
 
     private FibersService fibersService;
+    private String storage;
 
     @Override
     public void init(ServletConfig config) {
         ServletContext context = config.getServletContext();
         this.fibersService = (FibersService) context.getAttribute("fibersService");
+        this.storage = (String) context.getAttribute("storage");
     }
 
     @Override
@@ -48,8 +50,8 @@ public class FiberItem extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        fibersService.save(request.getReader());
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        fibersService.save(request, this.storage);
     }
 
 }

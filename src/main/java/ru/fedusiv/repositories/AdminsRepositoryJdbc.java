@@ -9,7 +9,7 @@ public class AdminsRepositoryJdbc implements AdminsRepository {
     private JdbcTemplate template;
 
     //language=SQL
-    private String SQL_GET_PASSWORD = "select password from admins";
+    private String SQL_GET_PASSWORD = "select password from admins where login = ?";
 
     private RowMapper<Admin> mapper =
             row -> Admin.builder().password(row.getString("password")).build();
@@ -20,7 +20,7 @@ public class AdminsRepositoryJdbc implements AdminsRepository {
 
     @Override
     public String getPassword(String login) {
-        Admin admin = template.query(SQL_GET_PASSWORD, mapper).get(0);
+        Admin admin = template.query(SQL_GET_PASSWORD, mapper, login).get(0);
         return admin.getPassword();
     }
 }

@@ -3,6 +3,7 @@ package ru.fedusiv.repositories;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JdbcTemplate {
@@ -57,17 +58,56 @@ public class JdbcTemplate {
         }
     }
 
-    public int update(String sql, Object ... args) {
-
+    public void update(String sql, Object ... args) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            // single row update insert into ... values (...);
             for (int i = 0; i < args.length; i++) {
                 statement.setObject(i + 1, args[i]);
             }
-            return statement.executeUpdate();
+
+            statement.executeUpdate();
+
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
     }
+
+    public void updateBatch(String sql, Object ... args) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            // case files inserting for single thread
+            // multiple rows update insert into ... values (...), (...) ...;
+            List<Object> arguments = new ArrayList<>();
+
+            for (Object arg : args) {
+
+                boolean list = false;
+
+                if (arg.getClass().getInterfaces()[0] == List.class) {
+                    arguments.addAll((ArrayList<Object>) arg);
+                    list = true;
+                }
+
+                if (!list) {
+                    arguments.add(arg);
+                }
+
+            }
+
+            for (int i = 1; i < arguments.size(); i++) {
+                statement.setObject(1, arguments.get(0));
+                statement.setObject(2, arguments.get(i));
+                statement.addBatch();
+            }
+            statement.executeBatch();
+
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
 
 }

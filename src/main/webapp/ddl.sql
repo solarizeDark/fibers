@@ -48,5 +48,19 @@ alter column password type varchar;
 
 alter table fibers
 drop constraint fk_fibers_id,
-    add constraint fk_fibers_id foreign key (comment_to) references fibers(id)
-    on delete cascade;
+
+add constraint fk_fibers_id foreign key (comment_to) references fibers(id)
+on delete cascade;
+
+create table files (
+
+    id bigserial,
+    constraint pk_files primary key (id),
+
+    fiber_id bigint,
+    constraint fk_fibers_id foreign key (fiber_id) references fibers(id)
+    on delete cascade,
+
+    name varchar not null
+
+);

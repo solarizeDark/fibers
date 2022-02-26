@@ -1,10 +1,11 @@
 async function handle_new_data(url, data, http_method = 'POST') {
+
     let post_response = await fetch(url, {
-       method: http_method,
-       headers: {
-           'Content-Type': 'application/json',
-       },
-       body: JSON.stringify(data)
+        method: http_method,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
     });
 
     if (!post_response.ok) {

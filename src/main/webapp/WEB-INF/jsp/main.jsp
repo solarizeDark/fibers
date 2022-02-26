@@ -26,6 +26,8 @@
             </div>
             <form id="new_fiber">
                 <input class="input" name="section" placeholder="Text" type="text" required/>
+                <br>
+                <input type="file" name="files" multiple>
             </form>
             <br>
             <button id="create-button" class="modal-create">Create</button>

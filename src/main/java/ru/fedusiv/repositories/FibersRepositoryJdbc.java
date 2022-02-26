@@ -26,7 +26,7 @@ public class FibersRepositoryJdbc implements FibersRepository {
             "comment_to from fibers where id = ?";
     //language=SQL
     private static String SQL_INSERT_FIBER = "insert into fibers(section, creation_date, comment_to) values" +
-            "(?, current_timestamp, ?)";
+            "(?, current_timestamp, ?) returning id";
     //language=SQL
     private static String SQL_FIND_ALL_COMMENTS =
             "with recursive comments as (" +
@@ -49,13 +49,20 @@ public class FibersRepositoryJdbc implements FibersRepository {
                     .commentTo(row.getLong("comment_to") == 0 ? null : row.getLong("comment_to"))
                     .build();
 
+    RowMapper<Fiber> fiberMapperId = row ->
+            Fiber.builder()
+                    .id(row.getLong("id"))
+                    .build();
+
     public FibersRepositoryJdbc(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
-    public void save(Fiber entity) {
-        jdbcTemplate.update(SQL_INSERT_FIBER, entity.getSection(), entity.getCommentTo());
+    public Long save(Fiber entity) {
+        return jdbcTemplate.query(SQL_INSERT_FIBER, fiberMapperId, entity.getSection(), entity.getCommentTo())
+                .get(0)
+                .getId();
     }
 
     @Override

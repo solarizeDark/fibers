@@ -4,13 +4,14 @@ window.addEventListener('load', function (){
 
 async function create_thread() {
 
-    let data = new FormData(document.getElementById('new_fiber'));
+    let formData = new FormData(document.getElementById('new_fiber'));
 
-    let fiber = {
-        'section': data.get('section')
+    let options = {
+        method: 'POST',
+        body: formData
     }
 
-    let res = await handle_new_data(location.toString(), fiber);
+    await fetch(location.toString(), options);
     main_page_composer(res);
 
 }
@@ -33,7 +34,7 @@ let main_page_composer =
             paragraph.appendChild(id);
 
             let anchor = document.createElement('a');
-            anchor.href = `<c:url value=\"/fiber?fiber_id=${item.id}\"/>`;
+            anchor.href = `/fiber?fiber_id=${item.id}`;
             anchor.target = '_self';
 
             let br = document.createElement('br');

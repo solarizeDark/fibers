@@ -4,14 +4,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.fedusiv.repositories.AdminsRepository;
-import ru.fedusiv.repositories.AdminsRepositoryJdbc;
-import ru.fedusiv.repositories.FibersRepository;
-import ru.fedusiv.repositories.FibersRepositoryJdbc;
-import ru.fedusiv.services.AdminsService;
-import ru.fedusiv.services.AdminsServiceImpl;
-import ru.fedusiv.services.FibersService;
-import ru.fedusiv.services.FibersServiceImpl;
+import ru.fedusiv.repositories.*;
+import ru.fedusiv.services.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -42,6 +36,9 @@ public class ContextListener implements ServletContextListener {
             throw new IllegalArgumentException(e);
         }
 
+        String storage = properties.getProperty("files.storage");
+        context.setAttribute("storage", storage);
+
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl         (properties.getProperty("db.url"));
         hikariConfig.setDriverClassName (properties.getProperty("db.driver"));
@@ -53,8 +50,12 @@ public class ContextListener implements ServletContextListener {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         context.setAttribute("passwordEncoder", passwordEncoder);
 
+        FilesRepository filesRepository = new FilesRepositoryImpl(dataSource);
+        FilesService filesService = new FilesServiceImpl(filesRepository);
+        context.setAttribute("filesService", filesService);
+
         FibersRepository fibersRepository = new FibersRepositoryJdbc(dataSource);
-        FibersService fibersService = new FibersServiceImpl(fibersRepository);
+        FibersService fibersService = new FibersServiceImpl(fibersRepository, filesRepository);
         context.setAttribute("fibersService", fibersService);
 
         AdminsRepository adminsRepository = new AdminsRepositoryJdbc(dataSource);
