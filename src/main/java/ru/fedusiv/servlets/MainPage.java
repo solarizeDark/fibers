@@ -2,6 +2,7 @@ package ru.fedusiv.servlets;
 
 import com.google.gson.Gson;
 import ru.fedusiv.models.Fiber;
+import ru.fedusiv.models.File;
 import ru.fedusiv.services.FibersService;
 
 import javax.servlet.ServletConfig;
@@ -12,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -44,8 +44,8 @@ public class MainPage extends HttpServlet {
             return;
         }
 
-        List<Fiber> of = fibersService.findAllOpeningFibers();
-        request.setAttribute("fibers", of);
+        List<Fiber> openingFibers = fibersService.findAllOpeningFibers();
+        request.setAttribute("fibers", openingFibers);
         request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
     }
 

@@ -15,6 +15,8 @@
 <body>
 <h5 class="page_title">Fiber</h5>
 
+<img src="<c:url value="/file?name=shiny.jpg"/>"/>
+
 <div class="buttons">
     <button class="modal-open item_1" data-id="change-colors">Reverse colors</button>
     <button class="modal-open item_16" data-id="new-fiber-modal">New Fiber</button>

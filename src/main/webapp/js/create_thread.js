@@ -12,7 +12,15 @@ async function create_thread() {
     }
 
     await fetch(location.toString(), options);
-    main_page_composer(res);
+
+    rebuild_page();
+
+}
+
+async function rebuild_page() {
+
+    let res = await fetch(location.toString(), { method: 'GET' } );
+
 
 }
 

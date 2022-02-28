@@ -2,7 +2,9 @@ package ru.fedusiv.models;
 
 import lombok.*;
 
+import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +17,7 @@ public class Fiber {
     private String section;
     private LocalDateTime creationDate;
     private Long commentTo;
+    private List<File> files;
 
     public Fiber(String comment_to, String comment) {
         this.section = comment;

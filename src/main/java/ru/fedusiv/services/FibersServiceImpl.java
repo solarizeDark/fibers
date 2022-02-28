@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class FibersServiceImpl implements FibersService {
 
@@ -49,8 +50,9 @@ public class FibersServiceImpl implements FibersService {
         for (Part part : request.getParts()) {
             String fileName = part.getSubmittedFileName();
             if (fileName != null) {
-                fileNames.add(fileName);
-                part.write(storage + File.separator + fileName);
+                String uuid = UUID.randomUUID().toString();
+                fileNames.add(uuid + " " + fileName);
+                part.write(storage + File.separator + uuid + " " + fileName);
             }
         }
 

@@ -1,3 +1,7 @@
+<%@ page import="ru.fedusiv.models.Fiber" %>
+<%@ page import="java.util.List" %>
+<%@ page import="ru.fedusiv.models.File" %>
+<%@ page import="java.io.PrintWriter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -6,6 +10,7 @@
     <script src="<c:url value="/js/fiber_page_open_close_buttons.js"/>"></script>
     <script src="<c:url value="/js/fetch.js"/>"></script>
     <script src="<c:url value="/js/create_thread.js"/>"></script>
+    <script src="<c:url value="/js/audio_player.js"/>"></script>
 
     <style><%@include file="/css/style_main_page.css"%></style>
 
@@ -38,13 +43,27 @@
     <div class="container" id="fibers">
         <c:forEach items="${fibers}" var="fiber">
             <div class="item">
-                <p>
-                    ${fiber.creationDateToString()}
-                    #${fiber.getId()}
-                    <a href="<c:url value="/fiber?fiber_id=${fiber.getId()}"/>" target="_self">
-                        <br>${fiber.getSection()}
-                    </a>
-                </p>
+                ${fiber.creationDateToString()}
+                #${fiber.getId()}
+                <br>
+                <c:if test="${fiber.getFiles() != null}">
+                    <c:forEach items="${fiber.getFiles()}" var="file">
+                        <c:choose>
+                            <c:when test = "${file.getType().equals(\"jpg\") || file.getType().equals(\"png\")}">
+                                <img src="<c:url value="/file?name=${file.getName()}"/>" width="250" height="200"
+                                    style="margin-bottom: 5px; cursor: pointer"/>
+                            </c:when>
+                            <c:when test = "${file.getType().equals(\"mp3\")}">
+                                <div class="audio" id="${file.getId()}" style="color:purple; margin-bottom: 5px">
+                                        ${file.getClearName()}
+                                </div>
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
+                </c:if>
+                <a href="<c:url value="/fiber?fiber_id=${fiber.getId()}"/>" target="_self">
+                    <br>${fiber.getSection()}
+                </a>
             </div>
         </c:forEach>
     </div>

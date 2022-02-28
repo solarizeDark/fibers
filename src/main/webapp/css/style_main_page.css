@@ -17,6 +17,7 @@ html{
 .item {
     padding: 10px;
     border: 1px solid black;
+    background: #D3C2D3;
 }
 
 a:link {
