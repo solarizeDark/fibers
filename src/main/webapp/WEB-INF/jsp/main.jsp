@@ -8,7 +8,6 @@
 <head>
     <script src="<c:url value="/js/fiber_page_change_colors.js"/>"></script>
     <script src="<c:url value="/js/fiber_page_open_close_buttons.js"/>"></script>
-    <script src="<c:url value="/js/fetch.js"/>"></script>
     <script src="<c:url value="/js/create_thread.js"/>"></script>
     <script src="<c:url value="/js/audio_player.js"/>"></script>
 
@@ -51,12 +50,17 @@
                         <c:choose>
                             <c:when test = "${file.getType().equals(\"jpg\") || file.getType().equals(\"png\")}">
                                 <img src="<c:url value="/file?name=${file.getName()}"/>" width="250" height="200"
-                                    style="margin-bottom: 5px; cursor: pointer"/>
+                                    style="margin-bottom: 5px; cursor: pointer" loading="lazy"/>
                             </c:when>
                             <c:when test = "${file.getType().equals(\"mp3\")}">
                                 <div class="audio" id="${file.getId()}" style="color:purple; margin-bottom: 5px">
                                         ${file.getClearName()}
                                 </div>
+                            </c:when>
+                            <c:when test = "${file.getType().equals(\"mp4\")}">
+                                <video width="250" height="200" controls loading="lazy">
+                                    <source src="<c:url value="/file?name=${file.getName()}"/>" type="video/mp4">
+                                </video>
                             </c:when>
                         </c:choose>
                     </c:forEach>

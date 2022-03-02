@@ -3,7 +3,6 @@
 <html>
 <head>
     <script src="<c:url value="/js/IdError.js"/>"></script>
-    <script src="<c:url value="/js/fetch.js"/>"></script>
     <script src="<c:url value="/js/fiber_page_change_colors.js"/>"></script>
     <script src="<c:url value="/js/delete_fiber.js"/>"></script>
 

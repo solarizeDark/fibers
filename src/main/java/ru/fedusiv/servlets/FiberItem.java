@@ -7,6 +7,7 @@ import ru.fedusiv.services.FibersService;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/fiber")
+@MultipartConfig
 public class FiberItem extends HttpServlet {
 
     private FibersService fibersService;
@@ -29,6 +31,7 @@ public class FiberItem extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String requestType = request.getHeader("type");
 
         Long id = Long.parseLong(request.getParameter("fiber_id"));

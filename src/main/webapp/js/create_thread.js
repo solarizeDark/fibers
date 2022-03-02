@@ -13,15 +13,8 @@ async function create_thread() {
 
     await fetch(location.toString(), options);
 
-    rebuild_page();
-
-}
-
-async function rebuild_page() {
-
     let res = await fetch(location.toString(), { method: 'GET' } );
-
-
+    main_page_composer(res);
 }
 
 let main_page_composer =

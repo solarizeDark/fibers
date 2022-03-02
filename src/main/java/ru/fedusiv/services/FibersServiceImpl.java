@@ -43,21 +43,31 @@ public class FibersServiceImpl implements FibersService {
     @Override
     public void save(HttpServletRequest request, String storage) throws IOException, ServletException {
 
+        String commentToParameter = request.getParameter("comment_to");
+        long commentTo = commentToParameter != null ? Long.parseLong(commentToParameter) : -1;
+
         String section = request.getParameter("section");
 
         List<String> fileNames = new ArrayList<>();
 
         for (Part part : request.getParts()) {
             String fileName = part.getSubmittedFileName();
-            if (fileName != null) {
+            if (fileName != null && fileName.length() > 0) {
                 String uuid = UUID.randomUUID().toString();
                 fileNames.add(uuid + " " + fileName);
                 part.write(storage + File.separator + uuid + " " + fileName);
             }
         }
 
-        Long fiberId = fibersRepository.save(Fiber.builder().section(section).build());
-        filesRepository.save(fiberId, fileNames);
+        Long fiberId = fibersRepository.save(
+                Fiber.builder()
+                    .commentTo(commentTo != -1 ? commentTo : null)
+                    .section(section)
+                    .build());
+
+        if (fileNames.size() != 0) {
+            filesRepository.save(fiberId, fileNames);
+        }
     }
 
     @Override

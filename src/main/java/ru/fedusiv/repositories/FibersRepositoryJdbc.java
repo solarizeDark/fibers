@@ -53,7 +53,7 @@ public class FibersRepositoryJdbc implements FibersRepository {
             "from comments cms " +
             "left join files fs on fs.fiber_id = cms.id " +
             "group by cms.id, cms.section, cms.creation, cms.comment_to " +
-            "order by creation desc";
+            "order by creation";
 
     private JdbcTemplate jdbcTemplate;
 

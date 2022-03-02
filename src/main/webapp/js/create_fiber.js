@@ -10,12 +10,14 @@ async function create_comment() {
             throw new IdError('id value isn\'t number');
         }
 
-        let comment = {
-            'commentTo': data.get('comment_to'),
-            'section': data.get('comment')
+        let options = {
+            method: 'POST',
+            body: data
         }
 
-        let res = await handle_new_data(location.toString(), comment);
+        await fetch(location.toString(), options);
+
+        let res = await fetch(location.toString(), { method: 'GET' } );
         thread_composer(res);
 
     } catch (error) {
@@ -39,3 +41,18 @@ let thread_composer =
                 + ' comment to: #' + item.commentTo + '<br>' + item.section + '</div>'
         }
     };
+
+let get_date =
+    json =>
+    {
+        let getTimePart = val => parseInt(val) < 10 ? '0' + val : val;
+
+        let date = getTimePart(json.creationDate.date.day);
+        let month = getTimePart(json.creationDate.date.month);
+        let hour = getTimePart(json.creationDate.time.hour);
+        let minute = getTimePart(json.creationDate.time.minute);
+        let second = getTimePart(json.creationDate.time.second);
+
+        return date + '-' + month + '-' + json.creationDate.date.year + ' '
+            + hour + ':' + minute + ':' + second;
+    }
