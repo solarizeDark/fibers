@@ -1,8 +1,10 @@
 package ru.fedusiv.servlets;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import ru.fedusiv.models.Fiber;
 import ru.fedusiv.models.File;
+import ru.fedusiv.services.FiberGsonSerializer;
 import ru.fedusiv.services.FibersService;
 
 import javax.servlet.ServletConfig;
@@ -36,11 +38,7 @@ public class MainPage extends HttpServlet {
         String requestType = request.getHeader("Type");
 
         if (requestType != null && requestType.equals("ajax")) {
-            List<Fiber> fibers = fibersService.findAllOpeningFibers();
-            Gson gson = new Gson();
-            String fibersJSON = gson.toJson(fibers);
-            response.setContentType("application/json");
-            response.getWriter().write(fibersJSON);
+            fibersService.loadLastFibers(request, response);
             return;
         }
 

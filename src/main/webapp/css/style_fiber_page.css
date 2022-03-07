@@ -117,3 +117,21 @@ html{
 input:invalid:required {
     background-image: linear-gradient(to right, pink, lightgreen);
 }
+
+.image {
+    width: 250px;
+    height: 200px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.audio {
+    color: purple;
+    margin-bottom: 5px;
+}
+
+.video {
+    width: 250px;
+    height: 200px;
+    margin-bottom: 5px;
+}

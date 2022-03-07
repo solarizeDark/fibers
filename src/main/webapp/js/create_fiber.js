@@ -17,8 +17,28 @@ async function create_comment() {
 
         await fetch(location.toString(), options);
 
-        let res = await fetch(location.toString(), { method: 'GET' } );
-        thread_composer(res);
+        let fibers_container = document.getElementById('fibers');
+        let date_and_id = fibers_container.lastElementChild.lastElementChild;
+        // case only opening post exists
+        if (date_and_id == null) {
+            fibers_container = document.getElementsByClassName('opening-fiber').item(0);
+            date_and_id = fibers_container.childNodes[0].wholeText;
+        } else {
+            date_and_id = date_and_id.childNodes[0].wholeText;
+        }
+
+        let id = date_and_id.match(/#\d+/)[0].substring(1, );
+
+        let GET_options = {
+            method: 'GET',
+            headers: {
+                'Type': 'ajax',
+                'Last': id
+            }
+        }
+
+        let res = await fetch(location.toString(), GET_options).then(response => response.json());
+        fibers_composer(res, true);
 
     } catch (error) {
         if (error instanceof IdError) {
@@ -28,31 +48,3 @@ async function create_comment() {
         }
     }
 }
-
-let thread_composer =
-    json =>
-    {
-        let element = document.getElementById('fibers');
-        element.innerHTML = "";
-        element.innerHTML
-        for (let item of json) {
-            element.innerHTML +=
-                '<div class=\"item\">' + get_date(item) + ' #' + item.id
-                + ' comment to: #' + item.commentTo + '<br>' + item.section + '</div>'
-        }
-    };
-
-let get_date =
-    json =>
-    {
-        let getTimePart = val => parseInt(val) < 10 ? '0' + val : val;
-
-        let date = getTimePart(json.creationDate.date.day);
-        let month = getTimePart(json.creationDate.date.month);
-        let hour = getTimePart(json.creationDate.time.hour);
-        let minute = getTimePart(json.creationDate.time.minute);
-        let second = getTimePart(json.creationDate.time.second);
-
-        return date + '-' + month + '-' + json.creationDate.date.year + ' '
-            + hour + ':' + minute + ':' + second;
-    }

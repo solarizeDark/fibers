@@ -1,7 +1,9 @@
 package ru.fedusiv.servlets;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import ru.fedusiv.models.Fiber;
+import ru.fedusiv.services.FiberGsonSerializer;
 import ru.fedusiv.services.FibersService;
 
 import javax.servlet.ServletConfig;
@@ -34,15 +36,11 @@ public class FiberItem extends HttpServlet {
 
         String requestType = request.getHeader("type");
 
-        Long id = Long.parseLong(request.getParameter("fiber_id"));
-        if (requestType != null) {
-            // ajax request case
-            List<Fiber> fibers = fibersService.findAllComments(id);
-            Gson gson = new Gson();
-            String fibersJSON = gson.toJson(fibers);
-            response.setContentType("application/json");
-            response.getWriter().write(fibersJSON);
+        if (requestType != null && requestType.equals("ajax")) {
+            // last comments
+            fibersService.loadLastFibers(request, response);
         } else {
+            Long id = Long.parseLong(request.getParameter("fiber_id"));
             Fiber fiber = fibersService.findById(id);
             List<Fiber> comments = fibersService.findAllComments(id);
             request.setAttribute("fiber", fiber);

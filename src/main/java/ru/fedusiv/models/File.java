@@ -15,6 +15,6 @@ public class File {
     }
 
     // without uuid which added for storing
-    public String getClearName() { return name.substring(name.indexOf(" ")); }
+    public String getClearName() { return name.substring(name.indexOf(" ") + 1); }
 
 }

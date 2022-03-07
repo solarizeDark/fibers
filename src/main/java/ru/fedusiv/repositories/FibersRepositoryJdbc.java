@@ -11,6 +11,27 @@ import java.util.List;
 
 public class FibersRepositoryJdbc implements FibersRepository {
 
+    // for ajax requests
+    //language=SQL
+    private static String SQL_GET_LAST_FIBERS =
+            "select fibs.id, fibs.section, fibs.creation_date at time zone 'utc' at time zone 'Europe/Moscow' as creation," +
+            "array_agg(fs.id) as files_id, array_agg(fs.name) as files_names, fibs.comment_to " +
+            "from fibers fibs " +
+            "left join files fs on fs.fiber_id = fibs.id " +
+            "where fibs.id > ? and fibs.comment_to = ?" +
+            "group by fibs.id " +
+            "order by creation desc";
+
+    //language=SQL
+    private static String SQL_GET_LAST_OPENING_FIBERS =
+            "select fibs.id, fibs.section, fibs.creation_date at time zone 'utc' at time zone 'Europe/Moscow' as creation," +
+                    "array_agg(fs.id) as files_id, array_agg(fs.name) as files_names, fibs.comment_to " +
+                    "from fibers fibs " +
+                    "left join files fs on fs.fiber_id = fibs.id " +
+                    "where fibs.id > ? and fibs.comment_to is null " +
+                    "group by fibs.id " +
+                    "order by creation desc";
+
     //language=SQL
     private static String SQL_DELETE_FIBER = "delete from fibers where id = ?";
 
@@ -122,6 +143,16 @@ public class FibersRepositoryJdbc implements FibersRepository {
     @Override
     public List<Fiber> findAll() {
         return jdbcTemplate.query(SQL_FIND_ALL, mapper);
+    }
+
+    @Override
+    public List<Fiber> findLastFibers(Long id) {
+        return jdbcTemplate.query(SQL_GET_LAST_OPENING_FIBERS, mapper, id);
+    }
+
+    @Override
+    public List<Fiber> findLastCommentFibers(Long lastId, Long threadId) {
+        return jdbcTemplate.query(SQL_GET_LAST_FIBERS, mapper, lastId, threadId);
     }
 
     @Override

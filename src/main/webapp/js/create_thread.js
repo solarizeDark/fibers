@@ -13,39 +13,18 @@ async function create_thread() {
 
     await fetch(location.toString(), options);
 
-    let res = await fetch(location.toString(), { method: 'GET' } );
-    main_page_composer(res);
-}
+    let fibers_container = document.getElementById('fibers');
+    let date_and_id = fibers_container.firstElementChild.childNodes[0].wholeText;
+    let id = date_and_id.match(/#\d+/)[0].substring(1, );
 
-let main_page_composer =
-    json =>
-    {
-        let element = document.getElementById('fibers');
-        element.innerHTML = "";
-
-        for (let item of json) {
-            let div = document.createElement('div');
-            div.className = "item";
-
-            let paragraph = document.createElement('p');
-            let date = document.createTextNode(get_date(item));
-            paragraph.appendChild(date);
-
-            let id = document.createTextNode(' #' + item.id);
-            paragraph.appendChild(id);
-
-            let anchor = document.createElement('a');
-            anchor.href = `/fiber?fiber_id=${item.id}`;
-            anchor.target = '_self';
-
-            let br = document.createElement('br');
-            let section = document.createTextNode(item.section);
-
-            anchor.appendChild(br);
-            anchor.appendChild(section);
-            paragraph.appendChild(anchor);
-            div.appendChild(paragraph);
-            element.appendChild(div);
+    let GET_options = {
+        method: 'GET',
+        headers: {
+            'Type': 'ajax',
+            'Last': id
         }
+    }
 
-    };
+    let res = await fetch(location.toString(), GET_options).then(response => response.json());
+    fibers_composer(res, false);
+}
